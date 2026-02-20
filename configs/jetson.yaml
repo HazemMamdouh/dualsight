@@ -1,0 +1,18 @@
+# NVIDIA Jetson (Orin) preset: hardware decode through GStreamer, light models, tiled SR.
+device: cuda
+sources:
+  use_gstreamer: true
+  hw_decode: jetson           # nvv4l2decoder + nvvidconv
+thermal:
+  enhancer: classical         # switch to hybrid if the power budget allows
+  esrgan:
+    tile: 256
+motion:
+  proc_width: 416
+  flow:
+    backend: cuda_farneback   # needs OpenCV built with CUDA (JetPack OpenCV is not) -> falls back to raft
+detector:
+  model: yolo11n.pt           # export to TensorRT for production: yolo export model=yolo11n.pt format=engine half=True
+  every: 3
+viz:
+  panel_width: 480

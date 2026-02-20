@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+.venv/
+# data & outputs are generated, never committed
+data/
+runs/
+*.mp4
+*.avi
+*.pt
+*.pth
+*.engine
+*.onnx
+!docs/assets/*.gif

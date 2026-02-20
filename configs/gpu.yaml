@@ -1,0 +1,15 @@
+# Desktop / server GPU preset (CUDA).
+device: cuda
+thermal:
+  enhancer: hybrid            # destripe -> temporal NR -> Real-ESRGAN x4 -> veil-aware dehaze
+  esrgan:
+    model: realesr-general-x4v3
+    half: true
+motion:
+  proc_width: 640
+  flow:
+    backend: raft             # torchvision RAFT-small; cuda_farneback is used instead if OpenCV has CUDA
+detector:
+  model: yolo11s.pt
+  every: 2
+  half: true

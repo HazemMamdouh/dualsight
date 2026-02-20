@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dualsight"
+version = "1.0.0"
+description = "All-weather thermal + RGB motion intelligence: adaptive defog/deblur, GPU optical flow, motion attribution and analytics"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Hazem Mamdouh" }]
+keywords = ["thermal", "computer-vision", "optical-flow", "motion-detection", "defogging", "deblurring", "gstreamer", "surveillance"]
+dependencies = [
+  "numpy>=1.24,<2",
+  "opencv-contrib-python>=4.8",
+  "scipy>=1.10",
+  "pandas>=1.5",
+  "matplotlib>=3.7",
+  "pyyaml>=6.0",
+  "pillow>=9.0",
+  "torch>=2.1",
+  "torchvision>=0.16",
+  "ultralytics>=8.3",
+  "scikit-image>=0.21",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+data = ["huggingface_hub>=0.20"]
+
+[project.scripts]
+dualsight = "dualsight.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["dualsight*"]
+
+[tool.setuptools.package-data]
+dualsight = ["assets/fonts/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

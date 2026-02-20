@@ -1,0 +1,120 @@
+# DualSight default configuration (mirrors dualsight/config.py, where every key is documented).
+# Copy, edit, and pass with:  dualsight run --config my.yaml ...
+# Single keys can also be overridden inline:  --set motion.combine=or --set detector.every=2
+device: auto
+sources:
+  use_gstreamer: auto
+  hw_decode: none
+  sync_tolerance_ms: 40.0
+  realtime: false
+  max_frames: 0
+  start_s: 0.0
+registration:
+  thermal_to_rgb: null
+thermal:
+  gate:
+    on_score: 0.4
+    off_score: 0.3
+    hold_frames: 5
+    spread_ref: 0.55
+    grad_ref: 9.0
+    force: null
+  enhancer: auto
+  dehaze:
+    omega: 0.85
+    t_min: 0.4
+    window: 31
+    guided_radius: 24
+    guided_eps: 0.001
+    clahe_clip: 1.4
+    clahe_grid: 8
+    unsharp: 0.4
+    denoise: 2
+    temporal_nr: 0.35
+    destripe: false
+  esrgan:
+    model: realesr-general-x4v3
+    weights_dir: ~/.cache/dualsight
+    tile: 0
+    half: true
+    keep_sr_resolution: false
+rgb:
+  gate:
+    shift_px: 2.5
+    hold_frames: 2
+    require_blur: false
+    blur_ratio: 0.75
+    analysis_width: 480
+    force: null
+  deblur:
+    method: wiener
+    exposure: 0.85
+    max_len: 61
+    nsr: 0.02
+    dering: 5
+    taper: 24
+motion:
+  proc_width: 480
+  flow:
+    backend: auto
+    dis_preset: medium
+    raft_iters: 12
+  ego:
+    enabled: true
+    share_rig_motion: true
+    grid_step: 12
+    ransac_px: 1.5
+    resid_k: 0.25
+  flow_thresh: 0.4
+  flow_k_mad: 4.0
+  bg:
+    method: mog2
+    history: 200
+    var_threshold: 24
+    diff_thresh: 18
+    warmup_frames: 10
+  min_blob_snr: 1.3
+  transition_guard:
+    fog_rate: 0.08
+    snr_boost: 2.0
+  combine: and
+  min_area_frac: 0.00035
+  max_area_frac: 0.12
+  max_width_frac: 0.6
+  morph: 5
+  channels:
+  - thermal
+  - rgb
+tracking:
+  iou_match: 0.15
+  max_center_dist: 0.05
+  max_area_ratio: 3.0
+  max_age: 12
+  min_hits: 4
+  min_event_s: 1.0
+  min_displacement_frac: 0.03
+  merge_dist: 0.05
+detector:
+  enabled: true
+  model: yolo11n.pt
+  conf: 0.25
+  imgsz: 640
+  every: 3
+  mode: roi
+  roi_pad: 1.6
+  roi_min: 192
+  max_rois: 6
+  on_channels:
+  - rgb
+  - thermal
+  half: true
+analytics:
+  heatmap_width: 320
+  grid:
+  - 4
+  - 3
+viz:
+  panel_width: 640
+  timeline_s: 20.0
+  thermal_cmap: gray
+  show_masks: true
